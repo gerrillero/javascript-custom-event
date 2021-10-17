@@ -4,31 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Document</title>
+    <title>Javascript - Custom event</title>
 </head>
 <body>
-    <h2 id="number">0</h2>
+    <h2 id="heatherTag">Text</h2>
+    <input type="text" name="text" id="text">
+    <input type="color" name="color" id="color">
+    <button id="btnChangeTextColor">Change text and color</button>
     
     <script>
-        const heatherTag = document.getElementById('number');
-        console.log(heatherTag);
+        const heatherTag = document.getElementById('heatherTag');
+        const text = document.getElementById('text');
+        const color = document.getElementById('color');
+        const btnChangeTextColor = document.getElementById('btnChangeTextColor');
         
-        heatherTag.addEventListener('numberChanged', function(e) {
-            heatherTag.textContent = e.detail.number;
+        btnChangeTextColor.addEventListener('click', ()=> {
+            let textValue = (text.value !== "") ? text.value : 'Enter some text';
+            changeContentAndColor(textValue, color.value);
+        });
+        
+        heatherTag.addEventListener('textChanged', function(e) {
+            heatherTag.textContent = e.detail.text;
             heatherTag.style.color = e.detail.textColor;
         });
         
         function changeContentAndColor(text, color) {
             
-            const event = new CustomEvent('numberChanged', {
+            const event = new CustomEvent('textChanged', {
                 detail: {
-                    number: text,
+                    text: text,
                     textColor: color
                 }
             });
             
             heatherTag.dispatchEvent(event);
         }
+        
+        
     </script>
 </body>
 </html>
